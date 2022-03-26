@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectGuid>{B6EDEB98-1C96-4353-B552-5FDE5D4ADC6B}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>StressStrainData</RootNamespace>
+    <AssemblyName>StressStrainData</AssemblyName>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\sstaple\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>x86</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="NUnit.Framework">
+      <HintPath>bin\Debug\NUnit.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analyze.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Averager.cs" />
+    <Compile Include="Combination.cs" />
+    <Compile Include="FileReader.cs" />
+    <Compile Include="FileWriter.cs" />
+    <Compile Include="Offset.cs" />
+    <Compile Include="PreSreening.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreSreening.Designer.cs">
+      <DependentUpon>PreSreening.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LOESS.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MatrixMath.cs" />
+    <Compile Include="Plot1e.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plot1e.Designer.cs">
+      <DependentUpon>Plot1e.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plot3e.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plot3e.Designer.cs">
+      <DependentUpon>Plot3e.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plot3e2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plot3e2.Designer.cs">
+      <DependentUpon>Plot3e2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plot3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plot3.Designer.cs">
+      <DependentUpon>Plot3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlotMaker.cs" />
+    <Compile Include="Polynomial.cs" />
+    <Compile Include="ResultsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultsWindow.Designer.cs">
+      <DependentUpon>ResultsWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestFileReader.cs" />
+    <Compile Include="TestLOESS.cs" />
+    <Compile Include="TestMatrixMath.cs" />
+    <Compile Include="TestPolynomial.cs" />
+    <Compile Include="Zeroer.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreSreening.resx">
+      <DependentUpon>PreSreening.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResultsWindow.resx">
+      <DependentUpon>ResultsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+</Project>
