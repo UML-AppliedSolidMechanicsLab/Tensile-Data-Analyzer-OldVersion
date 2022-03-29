@@ -73,8 +73,13 @@ namespace StressStrainData
 			rSquared=0;
 			double residualSumSquared = 0;
 			Cout = new double[globPolyOrder+1,1];
-					
-    		myPoly.PolynomialFit(globPolyOrder,Xbar,Ybar, ref Cout,ref SEi,ref rSquared, ref residualSumSquared);
+
+			//add the 0,0 point so that the polynomial fit will be legit
+			LOESS.ReDim(ref Xbar, Xbar.Length + 1);
+			LOESS.ReDim(ref Ybar, Ybar.Length + 1);
+			Array.Sort(Xbar, Ybar); //This sorts the arrays, and puts 0,0 at the beginning
+
+			myPoly.PolynomialFit(globPolyOrder,Xbar,Ybar, ref Cout,ref SEi,ref rSquared, ref residualSumSquared);
 			finalCoefficients = new double [globPolyOrder+1];
 			finalSECoefficients = new double [globPolyOrder+1];
 			finalSECoefficients = SEi;

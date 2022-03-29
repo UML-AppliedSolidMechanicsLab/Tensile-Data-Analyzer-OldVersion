@@ -130,6 +130,8 @@ namespace StressStrainData
 				meanData[i,1] = Xbar[i];
 				seSecantSlope[i] = seCoefficients[i,0]/(Xbar[i]);//-strainOffset);
 			}
+
+			//And save it to the zeroedData
 			zeroedData = new double [inX.Length,2];
 			for (j = 0; j < inX.Length; j++){
 				zeroedData[j,0] = inY[j];

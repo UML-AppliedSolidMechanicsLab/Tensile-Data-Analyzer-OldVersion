@@ -432,22 +432,38 @@ namespace StressStrainData
 						PointPairList list15 = new PointPairList();
 						PointPairList list16 = new PointPairList();
 						Polynomial poly = new Polynomial();
-						
+
+			for (j = 0; j < analyze.ZeroData[fileNumber].MeanData.GetLength(0); j++)
+			{
+				list14.Add(analyze.ZeroData[fileNumber].MeanData[j, 1], analyze.ZeroData[fileNumber].MeanData[j, 0]);
+				list15.Add(analyze.ZeroData[fileNumber].MeanData[j, 1], analyze.ZeroData[fileNumber].MeanData[j, 0] 
+					+ analyze.ZeroData[fileNumber].SECoefficients[j,0],
+					  analyze.ZeroData[fileNumber].MeanData[j, 0] - analyze.ZeroData[fileNumber].SECoefficients[j, 0]);
+			}
+			list16.Add(0, poly.EvaluatePolynomial(0, analyze.ZeroData[fileNumber].OffsetData.COut_YieldOffset));
+			list16.Add(1.1 * analyze.ZeroData[fileNumber].OffsetData.YieldStrain,
+					   poly.EvaluatePolynomial(1.1 * analyze.ZeroData[fileNumber].OffsetData.YieldStrain, 
+					   analyze.ZeroData[fileNumber].OffsetData.COut_YieldOffset));
+			list13.Add(analyze.ZeroData[fileNumber].OffsetData.YieldStrain,
+					  analyze.ZeroData[fileNumber].OffsetData.YieldStress);
+
+			/*
 						for (j = 0; j < analyze.Total.MeanData.GetUpperBound(0)+1; j++){
 								list14.Add(analyze.Total.MeanData[j,1], analyze.Total.MeanData[j,0]);
 								list15.Add(analyze.Total.MeanData[j,1], analyze.Total.MeanData[j,0]+ analyze.Total.SECoefficients[j,0],
 							          analyze.Total.MeanData[j,0]- analyze.Total.SECoefficients[j,0]);
-						} 
-						//list16.Add(0, poly.EvaluatePolynomial(0,analyze.OffsetData.COut));
-						//list16.Add(analyze.OffsetData.YieldStrain+1000, 
-						//           poly.EvaluatePolynomial(analyze.OffsetData.YieldStrain+1000,analyze.OffsetData.COut));
-						//list13.Add(analyze.OffsetData.YieldStrain, analyze.OffsetData.YieldStress);
-						//Plot3e pl3a = new Plot3e(list13, list14, list15, list16, "All Specimens: " + material + ": "
-						//                         + temperature + "K ", "Strain (microstrain)", "Stress (psi)",  
-						//                         " " +analyze.OffsetData.PercentOffset+ " % Offset Yield Stress","Mean Points", "error", "Offset");
-						Plot3e pl3a = new Plot3e(list13, list14, list15, list16, "All Specimens: " + material + ": "
+						}
+			list16.Add(0, poly.EvaluatePolynomial(0,analyze.OffsetData.COut));
+			list16.Add(1.1 * analyze.ZeroData OffsetData.YieldStrain, 
+			           poly.EvaluatePolynomial(1.1 * analyze.OffsetData.YieldStrain,analyze.OffsetData.COut));
+			*/
+			//list13.Add(analyze.OffsetData.YieldStrain, analyze.OffsetData.YieldStress);
+			//Plot3e pl3a = new Plot3e(list13, list14, list15, list16, "All Specimens: " + material + ": "
+			//                         + temperature + "K ", "Strain (microstrain)", "Stress (psi)",  
+			//                         " " +analyze.OffsetData.PercentOffset+ " % Offset Yield Stress","Mean Points", "error", "Offset");
+			Plot3e pl3a = new Plot3e(list13, list14, list15, list16, "All Specimens: " + material + ": "
 						                         + temperature + "K ", "Strain ", "Stress",  
-						                         " ","Mean Points", "error", "Offset");
+						                         " Yield Stress","Mean Points", "error", "Offset");
 		}
 	}
 }

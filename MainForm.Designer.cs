@@ -85,10 +85,10 @@ namespace StressStrainData
             this.label2 = new System.Windows.Forms.Label();
             this.groupInputsGroupBox = new System.Windows.Forms.GroupBox();
             this.locPolyOrderTxtBx = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.globPolyOrderTxtBx = new System.Windows.Forms.TextBox();
             this.offsetGroupBx = new System.Windows.Forms.GroupBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
             this.offsetPercentTxtBx = new System.Windows.Forms.TextBox();
             this.rMinTxtBx = new System.Windows.Forms.TextBox();
             this.offsetCheckBx = new System.Windows.Forms.CheckBox();
@@ -668,6 +668,14 @@ namespace StressStrainData
             this.locPolyOrderTxtBx.Text = "1";
             this.locPolyOrderTxtBx.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label21
+            // 
+            this.label21.Location = new System.Drawing.Point(324, 19);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(99, 18);
+            this.label21.TabIndex = 29;
+            this.label21.Text = "Zeroeing R^2 Min";
+            // 
             // globPolyOrderTxtBx
             // 
             this.globPolyOrderTxtBx.Location = new System.Drawing.Point(264, 40);
@@ -697,14 +705,6 @@ namespace StressStrainData
             this.label20.TabIndex = 28;
             this.label20.Text = "% Offset";
             // 
-            // label21
-            // 
-            this.label21.Location = new System.Drawing.Point(324, 19);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(99, 18);
-            this.label21.TabIndex = 29;
-            this.label21.Text = "Zeroeing R^2 Min";
-            // 
             // offsetPercentTxtBx
             // 
             this.offsetPercentTxtBx.Location = new System.Drawing.Point(107, 10);
@@ -723,7 +723,6 @@ namespace StressStrainData
             // 
             // offsetCheckBx
             // 
-            this.offsetCheckBx.Enabled = false;
             this.offsetCheckBx.Location = new System.Drawing.Point(327, 37);
             this.offsetCheckBx.Name = "offsetCheckBx";
             this.offsetCheckBx.Size = new System.Drawing.Size(115, 24);

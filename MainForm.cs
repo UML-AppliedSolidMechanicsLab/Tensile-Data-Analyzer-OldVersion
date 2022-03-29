@@ -290,14 +290,12 @@ namespace StressStrainData
 		}
 		void OffsetCheckBxCheckedChanged(object sender, EventArgs e)
 		{
-			if (offsetCheckBx.Checked == true){
+			if (offsetCheckBx.Checked == true ){
 			offsetGroupBx.Visible = true;
 			offsetflag = 1;
-			YieldStressBttn.Enabled = true;
 			}
 			else{
 				offsetGroupBx.Visible = false;
-				YieldStressBttn.Enabled = false;
 				offsetflag = 0;
 			}
 		}
@@ -409,11 +407,17 @@ namespace StressStrainData
 		void FileNumRadioBttn1CheckedChanged(object sender, EventArgs e)
 		{
 			fileNumberBox.Enabled = true;
+            if (offsetCheckBx.Checked == true)
+            {
+				YieldStressBttn.Enabled = true;
+			}
+			
 			fileNumber = 1;
 		}
 		void AllRadioBttnCheckedChanged(object sender, EventArgs e)
 		{
 			fileNumberBox.Enabled = false;
+			YieldStressBttn.Enabled = false;
 			fileNumber = 0;
 		}
 		//Warning: this section is HUGE, so don't get into it unless you really have some time!!!

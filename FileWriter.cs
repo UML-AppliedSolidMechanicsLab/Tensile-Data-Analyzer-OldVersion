@@ -192,7 +192,7 @@ namespace StressStrainData
 				if (analyze.ZeroData[i].OffsetData.OffsetFlag == 1){
 					dataWrite.Write(",% Offset," + analyze.ZeroData[i].OffsetData.PercentOffset + ",R^2 Minimum," + analyze.ZeroData[i].OffsetData.RMin);
 					dataWrite.Write("Yield Stress," + analyze.ZeroData[i].OffsetData.YieldStress + "Yield Strain," + analyze.ZeroData[i].OffsetData.YieldStrain + "Offset," + analyze.ZeroData[i].OffsetData.StrainOffset
-							                + "C0," + analyze.ZeroData[i].OffsetData.COut[0,0] + "C1," + analyze.ZeroData[i].OffsetData.COut[1,0]);	
+							                + "C0," + analyze.ZeroData[i].OffsetData.COut_YieldOffset[0,0] + "C1," + analyze.ZeroData[i].OffsetData.COut_YieldOffset[1,0]);	
 				}
 				
 				
