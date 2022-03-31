@@ -103,6 +103,13 @@ namespace StressStrainData
     			VarYaboutMean = inY[I] - Ybar;
     			SSyy = SSyy + Math.Pow(VarYaboutMean, 2);
     		}
+            //Just in case this is NAN:
+            if (SSyy == 0)
+	{
+                SSyy = 0.00000001;
+                Rsquared = 1.0;
+                return;
+	}
     		//calculate correlation coefficient:
     		Rsquared = 1 - residualSumSquared / SSyy;
     		

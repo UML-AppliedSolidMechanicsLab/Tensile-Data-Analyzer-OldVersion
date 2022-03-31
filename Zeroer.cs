@@ -59,7 +59,7 @@ namespace StressStrainData
 			#endregion
 			
 			double dNumberofIntervals = (Math.Floor(2*(inX[inX.Length-1] - inX[0])/(interval))) - 1;
-			int NumberofIntervals = System.Convert.ToInt16(dNumberofIntervals);
+			int NumberofIntervals = System.Convert.ToInt32(dNumberofIntervals);
 			double [] Ybar = new double [NumberofIntervals];
 			sigma = new double [NumberofIntervals];
 			double [] Xbar = new double [NumberofIntervals];

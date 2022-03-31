@@ -96,7 +96,7 @@ namespace StressStrainData
             	for (j = 0; j < axChan; j++){
             		dataArray[i,1 + j] = (dataArray[i,1 + j])/length;
             		if (dispflag == 1)  //Convert to microstrain if displacement rather than strain
-            			dataArray[i,1 + j] = (dataArray[i,1 + j])*1000000; 
+            			dataArray[i,1 + j] = (dataArray[i,1 + j]); 
 				}
             	//make transverse strain positive
             	if (tranChan != 0){

@@ -20,11 +20,14 @@ namespace StressStrainData
 	public partial class PreSreening : Form
 	{
 		string root;
-		int axChan, tranChan, rowStart, dispflag, rowEnd, stressCol, strainCol;
-		double length, xSecArea;
+		int axChan, tranChan, dispflag, stressCol, strainCol;
+        public int rowStart, rowEnd;
+       
+
+        double length, xSecArea;
 		
 		public PreSreening(string inroot, int inaxChan, int intranChan,	 
-		                  double inlength, double inxSecArea, int inrowStart, int inrowEnd, int inStrainCol, int inStressCol, int indispflag)
+		                  double inlength, double inxSecArea, int inrowStart, int inrowEnd, int minIndex, int maxIndex, int inStrainCol, int inStressCol, int indispflag)
 		{
 			root = inroot;
 			axChan = inaxChan;
@@ -40,40 +43,53 @@ namespace StressStrainData
 			InitializeComponent();
 			Activate();
 			Show();
-			
+
+            //Theseonly need to be set once
+            tbStartIndex.Minimum = minIndex;
+            tbStartIndex.Maximum = rowEnd - 1;
+            tbStartIndex.Value = rowStart;
+            lMinStart.Text = Convert.ToString(minIndex);
+
+            tbEndIndex.Maximum = maxIndex;
+            tbEndIndex.Value = rowEnd;
+            tbEndIndex.Minimum = rowStart + 1;
+            lMaxEnd.Text = Convert.ToString(maxIndex);
+
+            setTickBoxes();
+
 		}
 		
 		void Zg2Load(object sender, EventArgs e)
 		{
 			CreateChart( zg2 );
-   			SetSize();
 		}
 		
 		// Call this method from the Form_Load method, passing your ZedGraphControl
 		public void CreateChart( ZedGraphControl zgc ){
 			
-			int i,j;
 			//Read in the Data first
 			FileReader tempread = new FileReader(root, axChan, tranChan, length, xSecArea, rowStart, rowEnd, strainCol, stressCol, dispflag);
 			
+
 			GraphPane myPane = zgc.GraphPane;
+            myPane.CurveList = new CurveList();
 
    			// Set the title and axis labels
    			myPane.Title.Text = "Raw Data";
-   			myPane.XAxis.Title.Text = "Strain (microstrain)";
-   			myPane.YAxis.Title.Text = "Stress (psi)";
+   			myPane.XAxis.Title.Text = "Strain";
+   			myPane.YAxis.Title.Text = "Stress";
 
    			PointPairList list1 = new PointPairList();
    			PointPairList list2 = new PointPairList();
    			
-   			for (i =0; i < tempread.RawData.GetUpperBound(0)+1; i++){ 
-   				for (j =0; j < tempread.AxChan; j++){
+   			for (int i =0; i < tempread.RawData.GetUpperBound(0)+1; i++){ 
+   				for (int j = 0; j < tempread.AxChan; j++){
    					list1.Add(tempread.RawData[i,1+j], tempread.RawData[i,0]);
    				}
    			}
    			if (tempread.TranChan != 0){
-   				for (i =0; i < tempread.RawData.GetUpperBound(0)+1; i++){
-   					for (j =0; j < tempread.TranChan; j++){
+   				for (int i = 0; i < tempread.RawData.GetUpperBound(0)+1; i++){
+   					for (int j = 0; j < tempread.TranChan; j++){
    						list2.Add(tempread.RawData[i,1+tempread.AxChan+j], tempread.RawData[i,0]);
    					}
    				}
@@ -107,17 +123,33 @@ namespace StressStrainData
    		
    			// Calculate the Axis Scale Ranges
    			zgc.AxisChange();
+            zgc.Invalidate();
 		}
 		
-		private void SetSize(){
-   			zg2.Location = new Point( 10, 10 );
-   			// Leave a small margin around the outside of the control
-   			zg2.Size = new Size( this.ClientRectangle.Width - 20, this.ClientRectangle.Height - 20 );
-		}
-		
-		void PreSreeningResize(object sender, EventArgs e)
-		{
-			SetSize();
-		}
-	}
+        private void setTickBoxes()
+        {
+            tbStartIndex.Maximum = rowEnd - 1;
+            lMaxStart.Text = Convert.ToString(rowEnd - 1);
+            tbEndIndex.Minimum = rowStart + 1;
+            lMinEnd.Text = Convert.ToString(rowStart + 1);
+            //tbEndIndex.Text = "End data at";
+            //tbStartIndex.Text = "Start data at";
+            label1.Text = "Start @ " + rowStart;
+            label2.Text = "End @ " + rowEnd;
+
+        }
+        private void tbEndIndex_Scroll(object sender, EventArgs e)
+        {
+            rowEnd = tbEndIndex.Value;
+            setTickBoxes();
+            CreateChart(zg2);
+        }
+
+        private void tbStartIndex_Scroll(object sender, EventArgs e)
+        {
+            rowStart = tbStartIndex.Value;
+            setTickBoxes();
+            CreateChart(zg2);
+        }
+    }
 }

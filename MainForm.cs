@@ -28,11 +28,11 @@ namespace StressStrainData
 		private int offsetflag = 0;
 		private int numberofFiles = 0;
 		private int numberofTranFiles = 0;
-		private int stringIndex1, stringIndex2, i, j;
+		private int stringIndex1, stringIndex2;//, i, j;
 		private List<string[]> individualInputsList= new List<string[]>();
 		private string[] groupInputsList;
 		private Analyze analyze;
-		private string [,] inputArray;
+		//private string [,] inputArray;
 		private int fileNumber = 0;
 		private string material;
 		private string folder;
@@ -53,7 +53,6 @@ namespace StressStrainData
 			//
 			// start out with an open dialog box.
 			//
-			
 		}
 		//individual file inputs Group
 		void BrowseMouseClick(object sender, MouseEventArgs e){
@@ -66,7 +65,6 @@ namespace StressStrainData
             if (fdlg.ShowDialog() == DialogResult.OK)
             {
                 
-               
             }
             try{
             	openFileTxt.Text = fdlg.FileName;
@@ -79,6 +77,10 @@ namespace StressStrainData
             	stringIndex1 = openFileTxt.Text.IndexOf(".");
             	stringIndex2 = openFileTxt.Text.LastIndexOf("v");
             	openFileTxt.Text = openFileTxt.Text.Remove(stringIndex1,stringIndex2-stringIndex1+1);
+				
+				FindMinAndMax(openFileTxt.Text, 0, out int firstIndex, out int lastIndex);
+				rowEndTxtBox.Text = Convert.ToString(lastIndex);
+				rowStartTxtBox.Text= Convert.ToString(firstIndex);
             	
             }        
             catch{
@@ -139,12 +141,18 @@ namespace StressStrainData
 				return;
 			}
 			try{
+				FindMinAndMax(openFileTxt.Text, Convert.ToInt32(axChan.Text), out int firstIndex, out int lastIndex);
+				int rowStart = Convert.ToInt32(rowStartTxtBox.Text) > firstIndex  && Convert.ToInt32(rowStartTxtBox.Text) < lastIndex  
+					? Convert.ToInt32(rowStartTxtBox.Text) : firstIndex;
+				int rowEnd = Convert.ToInt32(rowEndTxtBox.Text) < lastIndex && Convert.ToInt32(rowEndTxtBox.Text)  > rowStart
+					? Convert.ToInt32(rowEndTxtBox.Text) : lastIndex;
 				PreSreening ps1 = new PreSreening(openFileTxt.Text, Convert.ToInt32(axChan.Text),
 			                                  Convert.ToInt32(tranChan.Text),
 			                                  Convert.ToDouble(lengthTxtBox.Text), 
-			                                  Convert.ToDouble(xSecAreaTxtBox.Text), 
-			                                  Convert.ToInt32(rowStartTxtBox.Text), Convert.ToInt32(rowEndTxtBox.Text),
+			                                  Convert.ToDouble(xSecAreaTxtBox.Text),
+											  rowStart, rowEnd,	firstIndex, lastIndex,
 				                               Convert.ToInt32(tbStrainCol.Text), Convert.ToInt32(tbStressCol.Text), dispflag);
+				
 			}
 			catch(FormatException){
             	MessageBox.Show("Invalid Data Set: Verify all Data is numerical and starting row is correct.");
@@ -175,7 +183,7 @@ namespace StressStrainData
 				return;
 			}
 			
-			//Checks to make sure that all data is numberical, and columns are correct
+			//Checks to make sure that all data is numerical, and columns are correct
 			try{
 				FileReader fr = new FileReader(openFileTxt.Text, Convert.ToInt32(axChan.Text), 
 				                               Convert.ToInt32(tranChan.Text),
@@ -513,6 +521,44 @@ namespace StressStrainData
 			fileNumber = Convert.ToInt16(fileNumberBox.Text);
 			PlotMaker pm = new PlotMaker(analyze,numberofFiles, temperature, material, fileNumber);
 			pm.PlotMaker15();
+		}
+
+		private void FindMinAndMax(string root, int indexOfStrain, out int firstIndex, out int lastIndex)
+        {
+			// Read the file line by line. (3 to initialize because there are 2 rows of labels)
+			System.IO.StreamReader file = new System.IO.StreamReader(root + ".csv");
+			bool firstFlag = false;
+			bool lastFlag = false;
+			int i = 0;
+			firstIndex = 0;
+			lastIndex = 0;
+            //this section just reads the lines prior to the start of the data
+            while (!firstFlag || !lastFlag)
+            {
+				try
+				{
+					string line = file.ReadLine();
+					string[] temp = line.Split(new char[] { ',' });
+					Convert.ToDouble(temp[indexOfStrain]);
+					//This should just happen the first time the double is 
+					if (!firstFlag)
+					{
+						firstFlag = true;
+						firstIndex = i+1;
+					}
+					i++;
+				}
+                catch (Exception)
+                {
+                    if (firstFlag)
+					{
+						lastFlag = true;
+						lastIndex = i;
+					}
+					i++;
+                }
+				
+            }
 		}
 	}
 }
